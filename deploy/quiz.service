@@ -1,0 +1,20 @@
+[Unit]
+Description=Quiz Spring Boot application
+After=network.target mysql.service
+[Service]
+User=quiz
+Group=quiz
+WorkingDirectory=/opt/quiz
+EnvironmentFile=/etc/quiz/quiz.env
+ExecStart=/opt/quiz/runtime/java/bin/java -Xms32m -Xmx160m -XX:MaxMetaspaceSize=128m -XX:ReservedCodeCacheSize=32m -XX:+UseSerialGC -Xss256k -jar /opt/quiz/quiz.jar
+Restart=on-failure
+RestartSec=10
+MemoryHigh=300M
+MemoryMax=380M
+TasksMax=80
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+[Install]
+WantedBy=multi-user.target

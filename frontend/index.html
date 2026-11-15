@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="UTF-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>知测 · Quiz 学习空间</title
+  ><link rel="stylesheet" href="style.css" />
+  <header>
+    <strong>知测 / QUIZ</strong>
+    <nav>
+      <a href="admin/">管理入口</a> <button id="logout" hidden>退出登录</button>
+    </nav>
+  </header>
+  <main>
+    <div class="eyebrow">LEARN · PRACTICE · GROW</div>
+    <h1>每一次练习，都离掌握更近一步。</h1>
+    <p class="muted">Web 开发知识练习 · 即时反馈 · 巩固所学</p>
+    <p id="notice" class="notice" role="status"></p>
+    <section id="auth" class="card narrow">
+      <h2 id="authTitle">欢迎回来</h2>
+      <form id="authForm">
+        <label for="username">用户名</label
+        ><input
+          id="username"
+          required
+          pattern="[a-zA-Z0-9_]{3,32}"
+          autocomplete="username"
+        /><small>3–32 位字母、数字或下划线</small
+        ><label for="password">密码</label
+        ><input
+          id="password"
+          type="password"
+          required
+          minlength="6"
+          maxlength="72"
+          autocomplete="current-password"
+        />
+        <div class="row" style="margin-top: 24px">
+          <button id="authSubmit">登录</button
+          ><button type="button" id="toggle" class="secondary">创建账号</button>
+        </div>
+      </form>
+    </section>
+    <section id="workspace" hidden>
+      <div class="card row between">
+        <div>
+          <h2 id="welcome"></h2>
+          <p class="muted">完成全部题目后提交，成绩由服务器计算。</p>
+        </div>
+        <button id="start">开始练习</button>
+      </div>
+      <form id="quizForm"></form>
+      <section id="result" class="card" hidden></section>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</html>
