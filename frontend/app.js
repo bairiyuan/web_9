@@ -34,7 +34,7 @@ function show() {
   $("auth").hidden = !!token;
   $("workspace").hidden = !token;
   $("logout").hidden = !token;
-  $("welcome").textContent = "准备好检验所学了吗？";
+  $("welcome").textContent = "题目练习";
 }
 function notice(e) {
   $("notice").textContent = e.message || e;
@@ -46,7 +46,7 @@ $("logout").onclick = () => {
 };
 $("toggle").onclick = () => {
   register = !register;
-  $("authTitle").textContent = register ? "创建你的学习账号" : "欢迎回来";
+  $("authTitle").textContent = register ? "用户注册" : "用户登录";
   $("authSubmit").textContent = register ? "注册" : "登录";
   $("toggle").textContent = register ? "已有账号" : "创建账号";
   $("password").autocomplete = register ? "new-password" : "current-password";
@@ -85,7 +85,7 @@ $("start").onclick = async () => {
       questions
         .map(
           (q, i) =>
-            `<section class="card"><small>QUESTION ${String(i + 1).padStart(2, "0")}</small><h2>${esc(q.text)}</h2>${["a", "b", "c", "d"].map((k, j) => `<label class="option"><input required type="radio" name="q${q.id}" value="${j}"><span>${"ABCD"[j]}. ${esc(q[k])}</span></label>`).join("")}</section>`,
+            `<section class="card"><small>第 ${i + 1} 题</small><h2>${esc(q.text)}</h2>${["a", "b", "c", "d"].map((k, j) => `<label class="option"><input required type="radio" name="q${q.id}" value="${j}"><span>${"ABCD"[j]}. ${esc(q[k])}</span></label>`).join("")}</section>`,
         )
         .join("") +
       (questions.length
@@ -105,7 +105,7 @@ $("quizForm").onsubmit = async (e) => {
     const d = await api("/submit", { answers });
     $("result").hidden = false;
     $("result").innerHTML =
-      `<div class="eyebrow">练习报告</div><div class="score">${d.score}<small> / 100</small></div><p>答对 ${d.correct} / ${d.total} 题</p>${d.results.map((q, i) => `<p>${i + 1}. ${esc(q.text)} · ${q.correct ? "正确" : "错误，正确答案：" + "ABCD"[q.answer]}</p>`).join("")}`;
+      `<div class="muted">练习报告</div><div class="score">${d.score}<small> / 100</small></div><p>答对 ${d.correct} / ${d.total} 题</p>${d.results.map((q, i) => `<p>${i + 1}. ${esc(q.text)} · ${q.correct ? "正确" : "错误，正确答案：" + "ABCD"[q.answer]}</p>`).join("")}`;
     $("result").scrollIntoView({ behavior: "smooth" });
   } catch (e) {
     notice(e);

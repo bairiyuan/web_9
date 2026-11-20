@@ -173,3 +173,15 @@ td button {
     padding: 14px 20px;
   }
 }
+
+/* 简洁的表单和列表布局 */
+body { background: #f7f7f7; color: #222; }
+header { border-color: #ddd; padding: 14px max(6vw,20px); }
+main { margin: 24px auto; }
+h1 { font-size: 24px; font-weight: 600; margin: 0 0 20px; }
+h2 { font-size: 19px; }
+.card { border-color: #ddd; border-radius: 4px; box-shadow: none; padding: 22px; }
+.narrow { margin: 24px auto; }
+input, textarea, select, button, .button, .option { border-radius: 4px; }
+.notice:empty { display: none; }
+@media (max-width:650px) { h1 { font-size: 22px; } .card { padding: 16px; } }

@@ -42,3 +42,12 @@ Nginx只在`nginx -t`通过后平滑reload。没有重启现有排课后端或My
 - 上传暂存文件位于`/tmp/quiz-*`；后续清理只针对本项目暂存文件。
 
 管理员用户名为`admin`。读取初始密码：由具备sudo权限的维护者在服务器执行`sudo cat /etc/quiz/quiz.env`，查看ADMIN_PASSWORD。该文件还包含服务密钥，勿截图或提交到Git。
+
+
+## 2026-11-20 更新与故障排查
+- 管理员admin密码按要求改为123456，仍以BCrypt哈希存储；token_version递增，旧管理员JWT失效。
+- 同步更新root专读的`/etc/quiz/quiz.env`中ADMIN_PASSWORD，未修改JWT密钥或数据库密码。
+- 静态页面去掉宣传标语，精简布局；更新前备份至`/opt/quiz/backups/frontend-20261120.tar.gz`。未重启Java、MySQL、Nginx。
+- 浏览器验证admin/123456登录、题库列表和390px用户端布局，脚本错误为0。
+- `/var/log/kern.log`确认北京时间2026-11-19 17:12:16发生global OOM，内核杀掉mysqld，anon-rss约416MiB；轮转日志还记录2026-11-06 13:56:30同类OOM（发生于Quiz部署前）。因此确认存在整机内存耗尽问题，不能仅凭此证明整段SSH失联原因，也不能把问题全部归因Quiz。
+- 重启后MySQL执行crash recovery并恢复连接；仍无Swap。此次仅排查，没有调整系统内存配置。
